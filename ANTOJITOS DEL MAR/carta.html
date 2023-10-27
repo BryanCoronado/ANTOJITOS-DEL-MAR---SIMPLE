@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Proyectos</title>
+</head>
+<body>
+    <h1>Lista de Proyectos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Tipo</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody id="projectTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        // La URL de la API
+        const apiUrl = 'https://cevicheria-antojitos-del-mar.onrender.com/api/projects';
+
+        // Función para obtener los datos de la API y mostrarlos en la tabla
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('projectTableBody');
+                data.forEach(project => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${project.id}</td>
+                        <td>${project.nombre}</td>
+                        <td>${project.descripcion}</td>
+                        <td>${project.tipo}</td>
+                        <td>${project.cantidad}</td>
+                        <td>${project.precio}</td>
+                        <img src="${project.imagen}" alt="Imagen del proyecto" width="100">
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }) 
+            .catch(error => {
+                console.error('Error al obtener datos de la API:', error);
+            });
+    </script>
+</body>
+</html>
